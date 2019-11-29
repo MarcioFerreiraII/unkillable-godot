@@ -1,10 +1,10 @@
 extends StaticBody2D
 
 const speed = 0.4
-const max_life = 25
+const max_life = 10
 
 var posicao_inicial = Vector2()
-var dano = 8
+var dano = 5
 var flip = true
 var posicao_final
 var life = max_life
@@ -19,6 +19,8 @@ func _ready():
 	$healthBar/bar.value = life
 	
 	posicao_inicial = get_position()
+	
+	flip = randi()%3 == 1
 
 func _process(delta):
 	if flip:
@@ -59,11 +61,6 @@ func die():
 
 func destroy():
 	$".".queue_free()
-	
-	var power_up_resource = preload("../colecionaveis/power_up.tscn")
-	var power_up = power_up_resource.instance()
-	power_up.set_position(get_position())
-	$"../..".add_child(power_up)
 
 func _on_chao_direita_body_exited(body):
 	flip = true
